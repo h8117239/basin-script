@@ -14,8 +14,8 @@ MUILT_TARGET = true
 TARGET_NUM = 1
 MULT_TARGET_CONSTANT = 1.4
 
-DO_FLAG_DAMAGE_ONCE = 100  
-
+DO_FLAG_DAMAGE_ONCE = 10000  
+FLAG_HP = 80000
 
 function PrintHello(args)
 
@@ -38,6 +38,7 @@ function ExchangeFlag( args )
       for k,v in pairs(targets) do
         -- print(k,v)
         if v:IsRealHero() then
+          print("is hero")
           if v:GetTeamNumber()==DOTA_TEAM_GOODGUYS then
             goods=goods+1
           elseif v:GetTeamNumber()==DOTA_TEAM_BADGUYS then
@@ -47,15 +48,28 @@ function ExchangeFlag( args )
       end
 print("create " .. goods .. bads)
 if goods==bads then  
-print("create " .. goods .. bads)
+    CureIfHPReduce(caster)
 elseif goods>bads then
   if caster:GetTeamNumber() ~= DOTA_TEAM_GOODGUYS then
     DoDamage(caster,DO_FLAG_DAMAGE_ONCE,DAMAGE_TYPE_PURE,caster)
+  else
+    CureIfHPReduce(caster)
   end 
 elseif caster:GetTeamNumber() ~= DOTA_TEAM_BADGUYS then
      DoDamage(caster,DO_FLAG_DAMAGE_ONCE,DAMAGE_TYPE_PURE,caster)
+       else
+    CureIfHPReduce(caster)
 end
     print("<<<<<<<<<<<<<<<<<<<<<<<<<DestroyFlag")
+end
+
+
+function CureIfHPReduce( caster)
+  if caster:GetHealth() < FLAG_HP then
+    local ModMaster = CreateItem("modifier_master", nil, nil) 
+    ModMaster:ApplyDataDrivenModifier(caster, caster, "modifier_hp_re_per", {duration = 1})
+
+  end
 end
 
 function SpawnFlag( args  )

@@ -893,6 +893,8 @@
     "MaxLevel"	"1"
     "AbilityCastRange" "10"
     "AbilityCastPoint" "10"
+    "IsHidden"	"0"
+
     "OnOwnerDied"
     {
     	"RunScript"
@@ -916,7 +918,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"			"225"
+				"radius"			"75"
 			}
 		}
 
@@ -934,12 +936,14 @@
     "MaxLevel"	"1"
     "AbilityCastRange" "10"
     "AbilityCastPoint" "10"
+    "IsHidden"	"0"
     
     "Modifiers"
     
     {
     	"ExchangeFlagAure"
     	{
+
     		"Passive" "1"
     		"ThinkInterval" "1.0"
         	"OnIntervalThink" 
@@ -958,6 +962,22 @@
         	}
         }
     	}
+
+    	"invulnerable"
+    	{
+    		"Passive"	"1"
+    		"States"
+    		{
+    			// Sub-keys can be found by using "modifierState" constant completions
+    			// Sub-values can be found by using "modifierStateValue" constant completions
+    			//"MODIFIER_STATE_INVULNERABLE"				"MODIFIER_STATE_VALUE_ENABLED"
+    			"MODIFIER_STATE_LOW_ATTACK_PRIORITY"		"MODIFIER_STATE_VALUE_ENABLED"
+    			//"MODIFIER_STATE_MAGIC_IMMUNE"				"MODIFIER_STATE_VALUE_ENABLED"
+    			"MODIFIER_STATE_ATTACK_IMMUNE"				"MODIFIER_STATE_VALUE_ENABLED"
+    			"MODIFIER_STATE_NO_TEAM_MOVE_TO"			"MODIFIER_STATE_VALUE_ENABLED"
+    			
+    		}
+    	}
     }
     
     	"AbilitySpecial"
@@ -966,10 +986,47 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"			"225"
+				"radius"			"75"
 			}
 		}
     
 	}
+
+	//modify的集合 便于lua脚本调用
+	"modifier_master"
+	{
+		"ID"							"2000"
+ 
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"BaseClass"						"item_datadriven"
+ 
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"100"
+		"AbilityCastPoint"				"0.0"
+ 
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+ 
+		"Modifiers"
+		{
+			"modifier_hp_re_per"
+			{
+				//"TextureName" "item_greater_salve"
+				//"EffectName" "particles/items_fx/healing_flask.vpcf"
+				//"EffectAttachType" "follow_origin"
+ 				"Properties"
+				{
+					//修改hp回复百分
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "100"
+					//"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"		""
+
+				}
+			}
+		}
+	}
+
 
 }
