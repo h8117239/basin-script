@@ -10,9 +10,9 @@
 		"AbilityName"					"fis_mirana_stun_arrow"
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"          			"5"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT "	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"	
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING|DOTA_UNIT_TARGET_COURIER"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"AbilityTextureName"			"mirana_arrow"		
 		//"ItemBaseLevel"					"0"
@@ -147,7 +147,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"BaseClass"						"mirana_arrow"
 		"AbilityTextureName"			"mirana_arrow"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING |DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_COURIER"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -893,7 +893,7 @@
     "MaxLevel"	"1"
     "AbilityCastRange" "10"
     "AbilityCastPoint" "10"
-    "IsHidden"	"0"
+    "IsHidden"	"1"
 
     "OnOwnerDied"
     {
@@ -918,7 +918,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"			"75"
+				"radius"			"150"
 			}
 		}
 
@@ -936,7 +936,7 @@
     "MaxLevel"	"1"
     "AbilityCastRange" "10"
     "AbilityCastPoint" "10"
-    "IsHidden"	"0"
+    "IsHidden"	"1"
     
     "Modifiers"
     
@@ -986,7 +986,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"			"75"
+				"radius"			"150"
 			}
 		}
     

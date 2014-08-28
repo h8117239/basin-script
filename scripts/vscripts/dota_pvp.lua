@@ -87,8 +87,10 @@ function SpawnFlag( args  )
   -- print(ability)
 
 if caster:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+  -- CreateUnitByName("npc_dota_flag", caster:GetOrigin(),  true, nil , nil, DOTA_TEAM_BADGUYS)
   CreateUnitByName("npc_dota_bad_flag", caster:GetCenter(),  true, nil , nil, DOTA_TEAM_BADGUYS)
 elseif caster:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+  -- CreateUnitByName("npc_dota_flag", caster:GetOrigin(),  true, nil , nil, DOTA_TEAM_BADGUYS)
   CreateUnitByName("npc_dota_good_flag", caster:GetCenter(),  true, nil , nil, DOTA_TEAM_GOODGUYS)
 else 
   local goods = 0
