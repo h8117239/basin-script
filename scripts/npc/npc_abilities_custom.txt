@@ -960,6 +960,19 @@
 				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 			}
         	}
+
+        	"RunScript"
+    		{
+    		"ScriptFile"		"dota_pvp.lua"
+			"Function"		"SpawnBuilding"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Radius"	"%range"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types"		"DOTA_UNIT_TARGET_BUILDING"
+			}
+    		}	
         }
     	}
 
@@ -988,6 +1001,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"			"150"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"			"2000"
+			}
 		}
     
 	}
@@ -1014,9 +1032,9 @@
 		{
 			"modifier_hp_re_per"
 			{
-				//"TextureName" "item_greater_salve"
-				//"EffectName" "particles/items_fx/healing_flask.vpcf"
-				//"EffectAttachType" "follow_origin"
+				"TextureName" "item_greater_salve"
+				"EffectName" "particles/items_fx/healing_flask.vpcf"
+				"EffectAttachType" "follow_origin"
  				"Properties"
 				{
 					//修改hp回复百分
@@ -1025,8 +1043,462 @@
 
 				}
 			}
+
 		}
 	}
+//光环技能   魔法回复光环 百分比
+"mana_aura"
+ {
+  "BaseClass" "ability_datadriven"
+  "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
+  "AbilityTextureName" "tusk_snowball"
+  "MaxLevel" "1"
+  "ItemBaseLevel"	"1"
+  "AbilityCastPoint"    "0.0"
+  "AbilityCastRange"    "50000"
+  "AbilityCooldown"    "0"
+  "AbilityManaCost"    "0"
+ 
+  "AbilitySpecial"
+  {
+   "01"
+   {
+    "var_type" "FIELD_INTEGER"
+    "Range" "50000"
+   }
+  }
+ 
+  "Modifiers"
+  {
+  	
 
+   "aure_modifer"
+   {
+    "Passive" "1"
+    "IsHidden" "1"
+    "Aura" "aure_mana"
+    "Aura_Radius" "%Range"
+    "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "Aura_Types" "DOTA_UNIT_TARGET_HERO"
+  }
+ 
+   "aure_mana"
+   {
+    //"IsDebuff" "0"
+  	"IsPurgable" "0"
+    "Properties"
+    {
+     "MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE" "50"
+    }
+   }
+
+   "aure_iv_modifer"
+   {
+    "Passive" "1"
+    "IsHidden" "1"
+    "Aura" "aure_iv"
+    "Aura_Radius" "300"
+    "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "Aura_Types" "DOTA_UNIT_TARGET_HERO"
+  }
+ 
+   "aure_iv"
+   {
+    //"IsDebuff" "0"
+    "EffectName" "particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+  	"IsPurgable" "0"
+    "States"
+    {
+     "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+    }
+   	"Properties"
+   	{
+   		"MODIFIER_PROPERTY_INVISIBILITY_LEVEL"	"80"
+   	}
+   }
+
+  }
+ }
+
+
+//光环技能   生命回复光环 百分比
+"hp_aura"
+ {
+  "BaseClass" "ability_datadriven"
+  "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
+  "AbilityTextureName" "dragon_knight_breathe_fire"
+  "MaxLevel" "1"
+ "ItemBaseLevel"	"1"
+  "AbilityCastPoint"    "0.0"
+  "AbilityCastRange"    "50000"
+  "AbilityCooldown"    "0"
+  "AbilityManaCost"    "0"
+ 
+  "AbilitySpecial"
+  {
+   "01"
+   {
+    "var_type" "FIELD_INTEGER"
+    "Range" "50000"
+   }
+  }
+ 
+  "Modifiers"
+  {
+  	
+
+   "aure_modifer"
+   {
+    "Passive" "1"
+    "IsHidden" "1"
+    "Aura" "aure_hp"
+    "Aura_Radius" "%Range"
+    "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "Aura_Types" "DOTA_UNIT_TARGET_HERO"
+  }
+ 
+   "aure_hp"
+   {
+    //"IsDebuff" "0"
+  	"IsPurgable" "0"
+    "Properties"
+    {
+     "MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "50"
+    }
+
+   }
+
+"aure_iv_modifer"
+   {
+    "Passive" "1"
+    "IsHidden" "1"
+    "Aura" "aure_iv"
+    "Aura_Radius" "300"
+    "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "Aura_Types" "DOTA_UNIT_TARGET_HERO"
+  }
+ 
+   "aure_iv"
+   {
+    //"IsDebuff" "0"
+    "EffectName" "particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+  	"IsPurgable" "0"
+    "States"
+    {
+     "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+    }
+       	"Properties"
+   	{
+   		"MODIFIER_PROPERTY_INVISIBILITY_LEVEL"	"1"
+   		"MODIFIER_PROPERTY_PERSISTENT_INVISIBILITY"		"70"
+   	}
+   }
+
+  }
+ }
+
+ //光环技能   魔法防御光环
+"m_p_aura"
+ {
+  "BaseClass" "ability_datadriven"
+  "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
+  "AbilityTextureName" "roshan_spell_block"
+  "MaxLevel" "1"
+ "ItemBaseLevel"	"1"
+  "AbilityCastPoint"    "0.0"
+  "AbilityCastRange"    "50000"
+  "AbilityCooldown"    "0"
+  "AbilityManaCost"    "0"
+ 
+  "AbilitySpecial"
+  {
+   "01"
+   {
+    "var_type" "FIELD_INTEGER"
+    "Range" "50000"
+   }
+  }
+ 
+  "Modifiers"
+  {
+  	
+
+   "aure_modifer"
+   {
+    "Passive" "1"
+    "IsHidden" "1"
+    "Aura" "aure_mp"
+    "Aura_Radius" "%Range"
+    "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "Aura_Types" "DOTA_UNIT_TARGET_HERO"
+  }
+ 
+   "aure_mp"
+   {
+    //"IsDebuff" "0"
+  	"IsPurgable" "0"
+    "Properties"
+    {
+     "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" "50"
+    }
+
+   }
+
+"aure_iv_modifer"
+   {
+    "Passive" "1"
+    "IsHidden" "1"
+    "Aura" "aure_iv"
+    "Aura_Radius" "300"
+    "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "Aura_Types" "DOTA_UNIT_TARGET_HERO"
+  }
+ 
+   "aure_iv"
+   {
+    //"IsDebuff" "0"
+    "EffectName" "particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+  	"IsPurgable" "0"
+    "States"
+    {
+     "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+    }
+       	"Properties"
+   	{
+   		"MODIFIER_PROPERTY_INVISIBILITY_LEVEL"	"80"
+   	}
+   }
+
+  }
+ }
+
+ //光环技能   施法冷却光环
+"cooldown_aura"
+ {
+  "BaseClass" "ability_datadriven"
+  "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
+  "AbilityTextureName" "jakiro_liquid_fire"
+  "MaxLevel" "1"
+ "ItemBaseLevel"	"1"
+  "AbilityCastPoint"    "0.0"
+  "AbilityCastRange"    "50000"
+  "AbilityCooldown"    "0"
+  "AbilityManaCost"    "0"
+ 
+  "AbilitySpecial"
+  {
+   "01"
+   {
+    "var_type" "FIELD_INTEGER"
+    "Range" "50000"
+   }
+  }
+ 
+  "Modifiers"
+  {
+  	
+
+   "aure_modifer"
+   {
+    "Passive" "1"
+    "IsHidden" "1"
+    "Aura" "aure_cd"
+    "Aura_Radius" "%Range"
+    "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "Aura_Types" "DOTA_UNIT_TARGET_HERO"
+  }
+ 
+   "aure_cd"
+   {
+    //"IsDebuff" "0"
+  	"IsPurgable" "0"
+    "Properties"
+    {
+     "MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT" "50"
+    }
+   }
+
+   "aure_iv_modifer"
+   {
+    "Passive" "1"
+    "IsHidden" "1"
+    "Aura" "aure_iv"
+    "Aura_Radius" "300"
+    "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "Aura_Types" "DOTA_UNIT_TARGET_HERO"
+  }
+ 
+   "aure_iv"
+   {
+    //"IsDebuff" "0"
+  	"IsPurgable" "0"
+    "EffectName" "particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+    "States"
+    {
+     "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+    }
+       	"Properties"
+   	{
+   		"MODIFIER_PROPERTY_INVISIBILITY_LEVEL"	"80"
+   	}
+   }
+
+  }
+ }
+
+	
+	 //隐身光环
+"invisible_aura"
+ {
+  "BaseClass" "ability_datadriven"
+  "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
+  "AbilityTextureName" "rubick_empty1"
+  "MaxLevel" "1"
+ "ItemBaseLevel"	"1"
+  "AbilityCastPoint"    "0.0"
+  "AbilityCastRange"    "600"
+  "AbilityCooldown"    "0"
+  "AbilityManaCost"    "0"
+ 
+  "AbilitySpecial"
+  {
+   "01"
+   {
+    "var_type" "FIELD_INTEGER"
+    "Range" "100"
+   }
+  }
+ 
+  "Modifiers"
+  {
+  	
+
+   "aure_modifer"
+   {
+    "Passive" "1"
+    "IsHidden" "1"
+    "Aura" "aure_iv"
+    "Aura_Radius" "%Range"
+    "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "Aura_Types" "DOTA_UNIT_TARGET_HERO"
+  }
+ 
+   "aure_iv"
+   {
+    //"IsDebuff" "0"
+    "EffectName" "particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+  	"IsPurgable" "0"
+    "States"
+    {
+     "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+    }
+   }
+  }
+ }
+
+
+ 	//传说中的变鸡术 不会被技能
+	"hex_or_sheep"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"shadow_shaman_voodoo"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"	"1"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName" "modifier_hex_or_sheep"
+				"Target" "TARGET"
+				//{
+				//	"Center" "POINT"
+				//	"Radius" "%radius"
+				//	"Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				//	"Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+				//}
+			}	
+			"FireSound"
+			{
+				"EffectName" "General.Chicken"
+			}	
+		}
+		
+		// Modifiers
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_hex_or_sheep"
+			{
+				"EffectName"									 "shadow_shaman_voodoo"
+				"ModelName"										 "models/props_gameplay/chicken.mdl"
+				"Duration"										 "%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"	"%movespeed"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%regen"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MUTED"			    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"           "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_PASSIVES_DISABLED"  "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_BLOCK_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_EVADE_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_HEXED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed"					"100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"14"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"regen"						"20"
+			}
+		}
+	}
 
 }

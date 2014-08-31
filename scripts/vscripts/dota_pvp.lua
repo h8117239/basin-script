@@ -22,6 +22,42 @@ function PrintHello(args)
 
 end
 
+function SpawnBuilding( args )
+  local target = args.Target
+  local caster = args.caster
+  local ability = args.ability
+  -- local basedamage = args.ability:GetAbilityDamage() 
+  -- local cooldown = ability:GetCooldown(ability:GetLevel() )
+  local targets = args.target_entities
+  local targetsNum = table.getn(targets)
+  local caster_team = caster:GetTeamNumber() 
+
+  
+  if targetsNum>0 then
+    -- print("SpawnBuilding>>>>>>>>>>>>>>>>>>>>>>>>")
+    -- print(targetsNum)
+    for k,v in pairs(targets) do
+        if v:GetTeamNumber() ~= caster_team then
+          v:SetTeam(caster_team)
+          for _,h in pairs(HeroList:GetAllHeroes() ) do
+            
+              if h:GetTeamNumber()==caster_team then
+                print("SetOwner player id true" .. h:GetMainControllingPlayer() )
+                v:SetControllableByPlayer(h:GetMainControllingPlayer(), true) 
+              else
+                print("SetOwner player id false" .. h:GetMainControllingPlayer() )
+                v:SetControllableByPlayer(h:GetMainControllingPlayer(), false) 
+              end
+          end
+          -- v:SetControllableByPlayer(3, true)
+        end
+
+    end
+
+  end
+
+end
+
 function ExchangeFlag( args )
   local target = args.Target
   local caster = args.caster
@@ -30,15 +66,14 @@ function ExchangeFlag( args )
   -- local cooldown = ability:GetCooldown(ability:GetLevel() )
   local targets = args.target_entities
   local targetsNum = table.getn(targets)
-  print("DestroyFlag>>>>>>>>>>>>>>>>>>>>>>>>")
-  print(targetsNum)
+  -- print("DestroyFlag>>>>>>>>>>>>>>>>>>>>>>>>")
+  -- print(targetsNum)
   local goods = 0
   local bads = 0
 
       for k,v in pairs(targets) do
         -- print(k,v)
         if v:IsRealHero() then
-          print("is hero")
           if v:GetTeamNumber()==DOTA_TEAM_GOODGUYS then
             goods=goods+1
           elseif v:GetTeamNumber()==DOTA_TEAM_BADGUYS then
@@ -46,7 +81,7 @@ function ExchangeFlag( args )
           end
         end
       end
-print("create " .. goods .. bads)
+-- print("create " .. goods .. bads)
 if goods==bads then  
     CureIfHPReduce(caster)
 elseif goods>bads then
@@ -60,7 +95,7 @@ elseif caster:GetTeamNumber() ~= DOTA_TEAM_BADGUYS then
        else
     CureIfHPReduce(caster)
 end
-    print("<<<<<<<<<<<<<<<<<<<<<<<<<DestroyFlag")
+    -- print("<<<<<<<<<<<<<<<<<<<<<<<<<DestroyFlag")
 end
 
 
@@ -119,6 +154,8 @@ end
 end
   print("<<<<<<<<<<<<<<<<<<<<<<<<<SpawnFlag")
 end
+
+
 
 function DoDamage( target,damage,damage_type,attacker )
       local damageTable = {
