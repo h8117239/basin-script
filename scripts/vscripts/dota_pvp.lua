@@ -1,6 +1,7 @@
 
 require("utils")
 require("heroes")
+require("abilities")
 
 MAX_CD = 12.0
 BASE_CD = 8.0
@@ -39,6 +40,7 @@ function SpawnBuilding( args )
     for k,v in pairs(targets) do
         if v:GetTeamNumber() ~= caster_team then
           v:SetTeam(caster_team)
+          MODIFIER_INVISIBLE_AURE(caster)
           for _,h in pairs(HeroList:GetAllHeroes() ) do
             
               if h:GetTeamNumber()==caster_team then
