@@ -1,0 +1,19 @@
+"lang"
+{
+	"Language"		"schinese"
+	"Tokens"
+	{		
+		"addon_game_name"			"峡谷之战"
+
+		"DOTA_Tooltip_ability_mana_aura"                          "魔法光环"
+		"DOTA_Tooltip_ability_mana_aura_Description"     		"来点魔法？"
+		//"DOTA_Tooltip_ability_mana_aura_Lore"               "剑圣怎么发风暴之锤了"
+		//"DOTA_Tooltip_ability_mana_aura_radius"            "作用范围："
+		//"DOTA_Tooltip_ability_mana_aura_duration"         "眩晕持续时间："
+		//"DOTA_Tooltip_ability_mana_aura_damage"         "伤害："
+
+
+		"DOTA_Tooltip_aure_mana"                          "魔法光环"
+		"DOTA_Tooltip_aure_mana_Description "     		"来点魔法？"
+	}
+}

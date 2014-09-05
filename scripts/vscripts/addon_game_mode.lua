@@ -8,6 +8,12 @@ require("utils")
 require("heroes")
 print( "Dota PvP game mode loaded." )
 
+MAX_LEVEL = 50
+XP_PER_LEVEL_TABLE = {}
+for i=1,MAX_LEVEL do
+  XP_PER_LEVEL_TABLE[i] = i * 100
+end
+
 
 
 function Precache( context )
@@ -41,8 +47,13 @@ function DotaPvP:InitGameMode()
 	local GameMode = GameRules:GetGameModeEntity()
 
 	-- Enable the standard Dota PvP game rules
-	GameRules:GetGameModeEntity():SetTowerBackdoorProtectionEnabled( true )
-	-- GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(50)
+	-- GameRules:GetGameModeEntity():SetTowerBackdoorProtectionEnabled( true )
+	-- GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+	-- GameRules:GetGameModeEntity():SetUseCustomHeroLevels(true) 
+	-- GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(MAX_LEVEL)
+	GameRules:SetUseUniversalShopMode(true) 
+
+
 	-- Register Think
 	print("HELLO DOTA**********************************************")
 
@@ -181,13 +192,14 @@ end
 function DotaPvP:OnNPCSpawned( event )
 	print("OnNPCSpawned")
   	local spawnedUnit = EntIndexToHScript( event.entindex )
-  	if spawnedUnit:IsCreature() then
+  	print("OnNPCSpawned" .. spawnedUnit:GetUnitName())
+
   		if spawnedUnit:IsRealHero() then
   		-- 初始化英雄
+  		print("OnNPCSpawned  hero")
   		InitHeroInfo(spawnedUnit:GetUnitName() )
  		DotaPvP:InitHeroAttribute(spawnedUnit) 		
   		end
-  end
 
  --  	if spawnedUnit:GetUnitName() == "npc_dota_hero_drow_ranger" then
 	-- local spell = spawnedUnit:FindAbilityByName("ashe_focus_passive")
@@ -197,19 +209,30 @@ end
 
 function DotaPvP:InitHeroAttribute( hero )
 	-- 先都采用智力英雄
-	PrintTable(hero)
-	hero:SetBaseDamageMin(-10) 
-	hero:SetBaseDamageMax(-10) 
-	hero:SetAbilityPoints(3) 
+	-- PrintTable(hero)
+	if hero:GetLevel() ==1 then
+		print("lvl up  9" .. hero:GetPlayerOwnerID())
+		for i=0,7 do
+		hero:HeroLevelUp(true) 
+
+		end
+	end
+	-- 该技能不会改变显示数值，但实际上生效了
+	hero:SetBaseMoveSpeed(370) 
+	
+
+	-- hero:SetBaseDamageMin(-10) 
+	-- hero:SetBaseDamageMax(-10) 
+	-- hero:SetAbilityPoints(3) 
 	-- 这个方法有问题？还是调用有问题，暂时注视
 	-- hero:SetDamageGain(1) 
 	-- DeepPrintTable(hero)
-	local intellect = hero:GetBaseIntellect() 
-	if intellect < 28 then 
-		hero:SetBaseIntellect(28)
-		elseif intellect >35 then
-			hero:SetBaseIntellect(35)
-	end
+	-- local intellect = hero:GetBaseIntellect() 
+	-- if intellect < 28 then 
+	-- 	hero:SetBaseIntellect(28)
+	-- 	elseif intellect >35 then
+	-- 		hero:SetBaseIntellect(35)
+	-- end
 
 end
 
@@ -227,7 +250,7 @@ function DotaPvP:GameThink()
 	-- PrintStatistic()
 	-- UpdateState()
 	-- UpdateState()
-	print("think 2.5")
+	-- print("think 2.5")
 	return 2.5
 end
 
@@ -236,7 +259,7 @@ function UpdateState(  )
 	if spawnedUnit then
 	for i,v in pairs(spawnedUnit) do
 	if v:IsHero() then
-DotaPvP:InitHeroAttribute(v) 	
+		DotaPvP:InitHeroAttribute(v) 	
   		-- InitHeroInfo(v:GetUnitName() .. v:)
   		-- print(v:GetUnitName() )
   		-- local int = v:GetIntellect()

@@ -320,16 +320,16 @@
 		//"ItemBaseLevel"					"0"
 		"precache"
 		{
-			"particle_folder" 	"particles/econ/generic/generic_aoe_explosion_sphere_1"
-			"particle_folder"	"particles/units/heroes/hero_enchantress"
-			"particle_folder"	"particles/units/heroes/hero_vengeful"
+			//"particle_folder" 	"particles/econ/generic/generic_aoe_explosion_sphere_1"
+			//"particle_folder"	"particles/units/heroes/hero_enchantress"
+			//"particle_folder"	"particles/units/heroes/hero_vengeful"
+			"particle_folder"	"particles/units/heroes/hero_templar_assassin"
 
-
-			"particle_folder"				"particles/econ/generic/generic_projectile_linear_1"
-			"particle_folder"				"particles/frostivus_herofx"
+			//"particle_folder"				"particles/econ/generic/generic_projectile_linear_1"
+			//"particle_folder"				"particles/frostivus_herofx"
 			"particle_folder"				"particles/frostivus_gameplay"
-			"particle_folder"				"particles/particles/units/heroes/hero_queenofpain"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+			//"particle_folder"				"particles/particles/units/heroes/hero_queenofpain"
+			//"soundfile"					"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -412,7 +412,7 @@
 			"FireEffect"
 			{
 						"TargetPoint" "POINT"
-						"EffectName" "particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1_a.vpcf"
+						"EffectName" "particles/units/heroes/hero_templar_assassin/templar_assassin_refraction_form.vpcf"
 						"EffectAttachType" "world_origin"
 						"EffectRadius" "%radius"
 						"EffectDurationScale" "1"
@@ -885,7 +885,7 @@
     {
     "BaseClass" "ability_datadriven"
 
-    "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
     "AbilityManaCost" "0"
 	"AbilityTextureName"            "mirana_arrow"
     "AbilityManaCost" "0"
@@ -928,7 +928,7 @@
 	{
 	"BaseClass" "ability_datadriven"
 
-    "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
     "AbilityManaCost" "0"
 	"AbilityTextureName"            "mirana_arrow"
     "AbilityManaCost" "0"
@@ -1038,6 +1038,19 @@
  
 		"Modifiers"
 		{
+
+			//减速
+			"modifier_slow"
+			{
+				"TextureName" "lich_chain_frost"
+				//"EffectName" "lich_frost_nova"
+				//"EffectAttachType" "follow_origin"
+ 				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-50"
+				}
+			}
+
 			"modifier_hp_re_per"
 			{
 				"TextureName" "item_greater_salve"
@@ -1143,13 +1156,19 @@
   "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
   "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
   "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
-  "AbilityTextureName" "tusk_snowball"
+  "AbilityTextureName" "crystal_maiden_brilliance_aura"
   "MaxLevel" "1"
   "ItemBaseLevel"	"1"
   "AbilityCastPoint"    "0.0"
   "AbilityCastRange"    "50000"
   "AbilityCooldown"    "0"
   "AbilityManaCost"    "0"
+
+  "precache"
+  {
+  		"particle_folder"	"particles/units/heroes/hero_ancient_apparition"
+  		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+  }
  
   "AbilitySpecial"
   {
@@ -1177,12 +1196,95 @@
    "aure_mana"
    {
     //"IsDebuff" "0"
+    "EffectRadius" "particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf"
+    "EffectAttachType"	 "follow_origin"
   	"IsPurgable" "0"
     "Properties"
     {
-     "MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE" "50"
+     "MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE" "2"
     }
    }
+
+
+   	"invis_modifer"
+   {
+
+    "Passive" "1"
+    "IsHidden" "1"
+
+    "ThinkInterval"  "1"
+
+    "OnIntervalThink"
+    {
+     "ApplyModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target"
+      {
+       "Teams"  "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+       "Types"  "DOTA_UNIT_TARGET_HERO"
+       "Center" "CASTER"
+       "Radius" "300"
+      }
+     }
+     "ApplyModifier"
+     {
+      "ModifierName" "remove_modifier"
+      "Target"
+      {
+       "Teams"  "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+       "Types"  "DOTA_UNIT_TARGET_HERO"
+       "Center" "CASTER"
+       "Radius" "300"
+      }
+     }
+    }
+
+   }
+
+   "remove_modifier"
+   {
+    //"IsDebuff" "1"
+    "IsPurgable" "0"
+    "IsHidden" "1"
+    "Duration" "1.1"
+    "OnDestroy"
+    {
+     "RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+    }
+
+        "OnAttacked"
+    {
+    "RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+
+   "OnAttackLanded"
+   {
+   	"RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+
+    "OnTakeDamage"
+   {
+   	"RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+  }
+
   }
  }
 
@@ -1194,13 +1296,20 @@
   "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
   "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
   "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
-  "AbilityTextureName" "dragon_knight_breathe_fire"
+  "AbilityTextureName" "witchdoctor_voodoo_restoration"
   "MaxLevel" "1"
- "ItemBaseLevel"	"1"
+  "ItemBaseLevel"	"1"
   "AbilityCastPoint"    "0.0"
   "AbilityCastRange"    "50000"
   "AbilityCooldown"    "0"
   "AbilityManaCost"    "0"
+	
+		"precache"
+		{
+			"particle_folder"	"particles/units/heroes/hero_witchdoctor"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
+		}
+
  
   "AbilitySpecial"
   {
@@ -1228,13 +1337,93 @@
    "aure_hp"
    {
     //"IsDebuff" "0"
-  	"IsPurgable" "0"
+    "EffectName" 	"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_skull.vpcf"
+  	"IsPurgable" 	"0"
     "Properties"
     {
-     "MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "50"
+     "MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "1"
     }
 
    }
+
+   	"invis_modifer"
+   {
+
+    "Passive" "1"
+    "IsHidden" "1"
+
+    "ThinkInterval"  "1"
+
+    "OnIntervalThink"
+    {
+     "ApplyModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target"
+      {
+       "Teams"  "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+       "Types"  "DOTA_UNIT_TARGET_HERO"
+       "Center" "CASTER"
+       "Radius" "300"
+      }
+     }
+     "ApplyModifier"
+     {
+      "ModifierName" "remove_modifier"
+      "Target"
+      {
+       "Teams"  "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+       "Types"  "DOTA_UNIT_TARGET_HERO"
+       "Center" "CASTER"
+       "Radius" "300"
+      }
+     }
+    }
+
+   }
+
+   "remove_modifier"
+   {
+    //"IsDebuff" "1"
+    "IsPurgable" "0"
+    "IsHidden" "1"
+    "Duration" "1.1"
+    "OnDestroy"
+    {
+     "RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+    }
+
+        "OnAttacked"
+    {
+    "RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+
+   "OnAttackLanded"
+   {
+   	"RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+
+    "OnTakeDamage"
+   {
+   	"RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+  }
  
   }
  }
@@ -1253,6 +1442,12 @@
   "AbilityCastRange"    "50000"
   "AbilityCooldown"    "0"
   "AbilityManaCost"    "0"
+
+  "precache"
+  {
+  	"particle_folder"	"particles/units/heroes/hero_oracle"
+  	"soundfile"			"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
+  }
  
   "AbilitySpecial"
   {
@@ -1280,13 +1475,96 @@
    "aure_mp"
    {
     //"IsDebuff" "0"
+    "EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+  	"IsPurgable" 	"0"
   	"IsPurgable" "0"
     "Properties"
     {
-     "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" "50"
+     "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" "20"
+     "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"20"
     }
 
    }
+
+
+      	"invis_modifer"
+   {
+
+    "Passive" "1"
+    "IsHidden" "1"
+
+    "ThinkInterval"  "1"
+
+    "OnIntervalThink"
+    {
+     "ApplyModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target"
+      {
+       "Teams"  "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+       "Types"  "DOTA_UNIT_TARGET_HERO"
+       "Center" "CASTER"
+       "Radius" "300"
+      }
+     }
+     "ApplyModifier"
+     {
+      "ModifierName" "remove_modifier"
+      "Target"
+      {
+       "Teams"  "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+       "Types"  "DOTA_UNIT_TARGET_HERO"
+       "Center" "CASTER"
+       "Radius" "300"
+      }
+     }
+    }
+
+   }
+
+   "remove_modifier"
+   {
+    //"IsDebuff" "1"
+    "IsPurgable" "0"
+    "IsHidden" "1"
+    "Duration" "1.1"
+    "OnDestroy"
+    {
+     "RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+    }
+
+        "OnAttacked"
+    {
+    "RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+
+   "OnAttackLanded"
+   {
+   	"RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+
+    "OnTakeDamage"
+   {
+   	"RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+  }
 
   }
  }
@@ -1298,13 +1576,18 @@
   "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
   "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
   "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
-  "AbilityTextureName" "jakiro_liquid_fire"
+  "AbilityTextureName" "rubick_spell_steal"
   "MaxLevel" "1"
- "ItemBaseLevel"	"1"
+  "ItemBaseLevel"	"1"
   "AbilityCastPoint"    "0.0"
   "AbilityCastRange"    "50000"
   "AbilityCooldown"    "0"
   "AbilityManaCost"    "0"
+  "precache"
+  {
+  	"particle_folder"	"particles/units/heroes/hero_silencer"
+  	"soundfile"			"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+  }
  
   "AbilitySpecial"
   {
@@ -1332,47 +1615,18 @@
    "aure_cd"
    {
     //"IsDebuff" "0"
+    "EffectName" "particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+    "EffectAttachType" "follow_origin"
+    "EffectRadius" 	"100"
   	"IsPurgable" "0"
     "Properties"
     {
-     "MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT" "50"
+     "MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT" "25"
     }
    } 
 
-  }
- }
 
-	
-	 //隐身光环
-"invisible_aura"
- {
-  "BaseClass" "ability_datadriven"
-  "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-  "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-  "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
-  "AbilityTextureName" "rubick_empty1"
-  "MaxLevel" "1"
-  "ItemBaseLevel"	"1"
-  "AbilityCastPoint"    "0.0"
-  "AbilityCastRange"    "300"
-  "AbilityCooldown"    "0"
-  "AbilityManaCost"    "0"
- 
-  "AbilitySpecial"
-  {
-   "01"
-   {
-    "var_type" "FIELD_INTEGER"
-    "Range" "300"
-   }
-  }
- 
-  "Modifiers"
-  {
-
-  	
-
-   "aure_modifer"
+   	"invis_modifer"
    {
 
     "Passive" "1"
@@ -1390,7 +1644,7 @@
        "Teams"  "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
        "Types"  "DOTA_UNIT_TARGET_HERO"
        "Center" "CASTER"
-       "Radius" "%Range"
+       "Radius" "300"
       }
      }
      "ApplyModifier"
@@ -1401,7 +1655,7 @@
        "Teams"  "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
        "Types"  "DOTA_UNIT_TARGET_HERO"
        "Center" "CASTER"
-       "Radius" "%Range"
+       "Radius" "300"
       }
      }
     }
@@ -1423,9 +1677,39 @@
      }
     }
 
+        "OnAttacked"
+    {
+    "RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+
+   "OnAttackLanded"
+   {
+   	"RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+
+    "OnTakeDamage"
+   {
+   	"RemoveModifier"
+     {
+      "ModifierName" "modifier_riki_permanent_invisibility"
+      "Target" "TARGET"
+     }
+   }
+  }
+
   }
  }
-}
+
+	
+
 
 
  	//传说中的变鸡术 不会被技能
@@ -1452,6 +1736,12 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+			"particle_folder"	"particles/units/heroes/hero_lion"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+		}
 		
 		"OnSpellStart"
 		{
@@ -1468,7 +1758,7 @@
 			}	
 			"FireSound"
 			{
-				"EffectName" "General.Chicken"
+				"EffectName" "Hero_Lion.Voodoo"
 			}	
 		}
 		
@@ -1478,8 +1768,8 @@
 		{
 			"modifier_hex_or_sheep"
 			{
-				"EffectName"									 "shadow_shaman_voodoo"
-				"ModelName"										 "models/props_gameplay/chicken.mdl"
+				//"EffectName"									 "shadowshaman_voodoo"
+				"ModelName"										 "models/props_gameplay/sheep01.mdl"
 				"Duration"										 "%duration"
 				"Properties"
 				{
@@ -1527,6 +1817,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"regen"						"20"
+			}
+			"04"
+			{	
+				"var_type"					"FIELD_INTEGER"
+				"range"						"300"
 			}
 		}
 	}

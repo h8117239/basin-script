@@ -40,7 +40,7 @@ function SpawnBuilding( args )
     for k,v in pairs(targets) do
         if v:GetTeamNumber() ~= caster_team then
           v:SetTeam(caster_team)
-          MODIFIER_INVISIBLE_AURE(caster)
+          -- MODIFIER_INVISIBLE_AURE(caster)
           for _,h in pairs(HeroList:GetAllHeroes() ) do
             
               if h:GetTeamNumber()==caster_team then
@@ -230,9 +230,7 @@ function MiranaSlowArrow( args )
   local totalDamage = CalExMagicDamage(basedamage,cooldown,caster:GetIntellect(),targetsNum) + basedamage
   print("damage =============== " .. totalDamage)
   PrintTable(args)
-     
-      -- local targets = Entities:FindInSphere(nil, target, 200) 
-      -- PrintTable(targets)
+
 
       for i,v in pairs(targets) do
         if(v) then
@@ -240,15 +238,7 @@ function MiranaSlowArrow( args )
         v:AddNewModifier(caster, ability, SLOW_MODIFIER, slow) 
     end
   end
-      -- local damageTable = {
-      -- victim = v,
-      -- damage = totalDamage,
-      -- damage_type = DAMAGE_TYPE_MAGICAL,
-      -- attacker = caster,
-      -- -- damage_flags = 0,
-      -- ability = args.ability,}
-      -- -- PrintTable(damageTable)
-      -- ApplyDamage(damageTable)  
+
  end
 
 
@@ -278,6 +268,44 @@ end
 
 
 
+function InRiver( trigger )
+
+    local act = trigger.activator
+    -- act:SetMaxSpeed(act:GetMaxSpeed() *0.5)
+    print("hello " .. act:GetName() )
+
+    print("hello " .. act:GetUnitName() )
+    MODIFIER_SLOW(act)
+    -- local ent = Entities:FindByClassname(nil, act:GetUnitName())
+    -- print("hello " .. ent:GetName() )
+    -- DeepPrintTable(ent)
+  -- print("hello " .. act:GetName )
+    -- print("hello " .. ent:GetBaseMoveSpeed() )
+    -- print("hello " .. ent:GetMaxSpeed() )
+  local cal = trigger.caller
+-- cal:SetMaxSpeed(cal:GetMaxSpeed() *0.5)
+
+  print("hello I'm In")
+
+end
+
+
+function OutRiver( trigger )
+ 
+    local act = trigger.activator
+     -- act:SetMaxSpeed(act:GetMaxSpeed() *2) 
+         -- act:SetMaxSpeed(act:GetMaxSpeed() *0.5)
+    act:RemoveModifierByName("modifier_slow") --[[Returns:void
+    Removes a modifier
+    ]]
+    print("hello " .. act:GetName() )
+    print("hello " .. act:GetBaseMoveSpeed() )
+    -- print("hello " .. act:GetMaxSpeed() )
+  local cal = trigger.caller
+-- cal:SetMaxSpeed(cal:GetMaxSpeed() *2)
+  print("hello I'm out")
+
+end
 
 
 

@@ -1,6 +1,6 @@
 
 
-
+cm_slow = "modifier_crystal_maiden_freezing_field_slow"
 
 MOD_MASTER = CreateItem("modifier_master", nil, nil) 
 
@@ -12,6 +12,10 @@ end
 
 
 MODIFIER_INVISIBLE_AURE = function ( target )
-	print("MODDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
-	return MakeMod(target,target,"aure_modifer",{duration = 99999})
+	return MakeMod(target,target,"aure_modifer",{})
+end
+
+
+MODIFIER_SLOW = function ( target )
+	return MakeMod(target,target,"modifier_slow",{})
 end
